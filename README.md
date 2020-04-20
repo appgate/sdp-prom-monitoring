@@ -25,7 +25,7 @@ This is the docker compose stack for a quick setup monitoring with AppGate SDP. 
 
 A host machine with the following specs, assuming collective(s) with total of 60 appliances, using 90days retention in tsdb. The heavier calculation you prometheus will perform, the more memory and cpu you will require. For now, the following specs are proven to work fine:
 * AWS: t3.standard, EC2 Amazon Linux Type 2
-* Azure: Centos7
+* Azure: Centos 7
 * Disk, SSD: 40GB
 
 Networking:
@@ -125,8 +125,8 @@ connections:
   password: plaintext
   skipVerifySSL: true
   autoTokenRenewal: true
-  promCollector: true
-  promTargetName: skip.packnot.com
+  promCollector: true # enable prometheus collectors
+  promTargetName: skip.packnot.com # the name under which this collective can be scraped
 ```
 
 
