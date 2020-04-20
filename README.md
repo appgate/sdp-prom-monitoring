@@ -4,15 +4,15 @@ This is the docker compose stack for a quick setup monitoring with AppGate SDP. 
 ## introduction
 
 * architecture: Docker stack deployed on docker swarm
-  	* Reverseproxy as entry point and certificate resolver
+  	* Reverse proxy as entry point and certificate resolver
   	* Grafana with prometheus & Co, time series database
   	* AppGate SDP remote prometheus exporter connecting to one or many AppGate SDP collectives
 
 * technology used in docker swarm:
-	* treaefik, edgerouter
+	* treaefik, edge router
 	* conkolla, prometheus to appgate connector and prom exporter
 	* prometheus et.al, scraper, database
-	* grafana, visualization and alerting frontend
+	* grafana, visualization and alerting front-end
 
 ## preperations:
 
@@ -23,7 +23,7 @@ This is the docker compose stack for a quick setup monitoring with AppGate SDP. 
 	* agprometheus.${DOMAIN}
 	* aggrafana.{DOMAIN}
 
-A host machine with the following specs, assuming collective(s) with total of 60 appliances, using 90days retention in tsdb.
+A host machine with the following specs, assuming collective(s) with total of 60 appliances, using 90days retention in tsdb. The heavier calculation you prometheus will perform, the more memory and cpu you will require. For now, the following specs are proven to work fine:
 * AWS: t3.standard, EC2 Amazon Linux Type 2
 * Azure: Centos7
 * Disk, SSD: 40GB
@@ -105,7 +105,7 @@ $ cd agmon
 ### Grafana
 Adjust any settings if required in grafana/config.monitoring:
 * The initial password can be replaced for user `admin`, but must match same one in `htapass/grafana_users`. You can later change and add users through the Grafana UI, and you always need to add them in the `grafana_users` as well.
-* Set the Hostname for Grafana: `GF_SERVER_ROOT_URL=https://grafana.${DOMAIN}`  
+* Set the hosT name for Grafana: `GF_SERVER_ROOT_URL=https://grafana.${DOMAIN}`  
 
 
 ### Conkolla setup
@@ -114,7 +114,21 @@ The conkolla can either connect automatically via:
 2. Manually through the UI on agconkolla.${DOMAIN}
 3. By an API call/operator process
 
-Conkolla support [AWS KMS](https://github.com/appgate/conkolla#kms-external-encryptiondecryption-provider) and can be given a base64 encoded aws kms blob with the additional parameters to decrytp/encrypt. You must use `auto token renwel` such conkolla alway can fetch the data from the controller. Please read in the [conkolla doc](https://github.com/appgate/conkolla#prometheus-metrics) how to setup a conkolla user on the AppGate controller.
+Conkolla support [AWS KMS](https://github.com/appgate/conkolla#kms-external-encryptiondecryption-provider) and can be given a base64 encoded aWS ams blob with the additional parameters to decrytp/encrypt. You must use `auto token renwel` such conkolla alway can fetch the data from the controller. Please read in the [conkolla doc](https://github.com/appgate/conkolla#prometheus-metrics) how to setup a conkolla user on the AppGate controller.
+
+In this example we are using a connections.yml file with a plain text password for simplicity. An example will follow on a separate page to set up with an EC2 instance, IAM role and KMS. Now, the configuration file `conkolla/connections.yml` can have an example setup:
+```
+version: 1
+connections:
+- controllerURL: skip.packnot.com 
+  username: monitorUser
+  password: plaintext
+  skipVerifySSL: true
+  autoTokenRenewal: true
+  promCollector: true
+  promTargetName: skip.packnot.com
+```
+
 
 ### Prometheus
 In prometheus/prometheus.yml, define job(s) according to the conkolla setup. Define one job as below for every target to be scraped from conkolla. The Configuration needs only 2 changes as indicated. The other settings must be kept as specified. 
