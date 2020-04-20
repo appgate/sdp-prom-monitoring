@@ -1,20 +1,15 @@
 version: "3.7"
-
-
 volumes:
   prometheus_data: {}
   grafana_data: {}
   traefik_data: 
-
 
 networks:
   monitor-net:
     driver: overlay
     name: monitor-net
 
-
 services:
-
   traefik:
     image: "traefik:v2.2"
     command:
@@ -43,7 +38,6 @@ services:
         # access to docker socket, required by traefik
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-
     deploy:
       restart_policy:
         condition: on-failure
@@ -59,7 +53,6 @@ services:
     networks:
       - monitor-net
   
-
   conkolla:
     image: mar8x/conkolla:latest
     command:
@@ -75,7 +68,6 @@ services:
     volumes: 
      # connection files for conkolla
      - "./conkolla:/data"
- 
 
     deploy:
       labels:
@@ -89,8 +81,6 @@ services:
         - "traefik.http.routers.ck.tls.certresolver=letsencryptrs"
       restart_policy:
         condition: on-failure
-
-
 
   prometheus:
     image: prom/prometheus
