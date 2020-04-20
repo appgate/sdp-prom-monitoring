@@ -33,7 +33,7 @@ This is currently been worked on.
 	* agprometheus.${DOMAIN}
 	* aggrafana.{DOMAIN}
 
-A host machine with the following specs, assuming collective(s) with total of 60 appliances, using 90days retention in tsdb. The heavier calculation you prometheus will perform, the more memory and cpu you will require. For now, the following specs are proven to work fine:
+A host machine with the following specs, assuming collective(s) with total of 60 appliances, using 90days retention in tsdb. The heavier calculation prometheus will perform, the more memory and cpu you will require. For now, the following specs are proven to work fine:
 * AWS: t3.standard, EC2 Amazon Linux Type 2
 * Azure: Centos 7
 * Disk, SSD: 40GB
