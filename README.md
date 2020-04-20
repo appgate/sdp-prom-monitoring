@@ -8,6 +8,11 @@ This is the docker compose stack for a quick setup monitoring with AppGate SDP. 
   	* Grafana with prometheus & Co, time series database
   	* AppGate SDP remote prometheus exporter connecting to one or many AppGate SDP collectives
 
+
+![architecture](./agprom-architecture.png)
+
+
+
 * technology used in docker swarm:
 	* treaefik, edge router
 	* conkolla, prometheus to appgate connector and prom exporter
