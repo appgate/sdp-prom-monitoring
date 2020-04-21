@@ -23,5 +23,10 @@ groups:
     - record: appgate:site_degradation:percentage
       expr: >
         100 * count(appliance_status_online{ role_gateway="true", online="false" }) by (target, site_id, appliance_name)/
-        count(role_status_gateway{}) by (target, site_id,appliance_name) 
+        count(role_status_gateway{}) by (target, site_id,appliance_name)
+
+    - record: appgate:appliance_version_count:labels_to_table
+      expr: >
+        count_values("version", appliance_major_version*100 + appliance_minor_version*10 + appliance_patch_version) by (target)
+
    
