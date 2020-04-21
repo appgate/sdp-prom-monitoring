@@ -8,7 +8,7 @@ This is currently been worked on.
 
 ## Overview
 
-* architecture: Docker stack deployed on docker swarm
+* Architecture: Docker stack deployed on docker swarm
   	* Reverse proxy as entry point and certificate resolver
   	* Grafana with prometheus & Co, time series database
   	* AppGate SDP remote prometheus exporter connecting to one or many AppGate SDP collectives
@@ -18,7 +18,7 @@ This is currently been worked on.
 
 
 
-* technology used:
+* TEchnology used:
 	* treaefik, edge router
 	* conkolla, prometheus to appgate connector and prom exporter
 	* prometheus et.al, scraper, database
@@ -33,7 +33,8 @@ This is currently been worked on.
 	* agprometheus.${DOMAIN}
 	* aggrafana.{DOMAIN}
 
-A host machine with the following specs, assuming collective(s) with total of 60 appliances, using 90days retention in tsdb. The heavier calculation prometheus will perform, the more memory and cpu you will require. For now, the following specs are proven to work fine:
+You can deploy the stack to an existing swarm. In this guide we setup a dedicated host and docker swarm. The host specs are as the following, assuming collective(s) with up to 60 appliances and using 90days retention in tsdb. 
+The heavier queries prometheus/grafan will perform, the more memory and CPU you will require. For now, the following specs are proven to work fine:
 * AWS: t3.standard, EC2 Amazon Linux Type 2
 * Azure: Centos 7
 * Disk, SSD: 40GB
