@@ -1,25 +1,28 @@
 groups:
   - name: appgate record rules
     rules:
-    - record: appgate:bandwidth_quantile95_over_1d:bps
+    - record: appgate:bandwidth_quantile_95_over_1d:bps
       expr: > 
         quantile_over_time(0.95, appliance_network_rx_bps{site_id!=""}[1d])  + 
         quantile_over_time(0.95, appliance_network_tx_bps{site_id!=""}[1d]) 
 
-    - record: appgate:bandwidth_quantile_95_over_2m:bps
+    - record: appgate:bandwidth_quantile_95_over_5m:bps
       expr: > 
-       quantile_over_time(0.95, appliance_network_rx_bps{site_id!=""}[2m]) + 
-       quantile_over_time(0.95, appliance_network_tx_bps{site_id!=""}[2m])
+       quantile_over_time(0.95, appliance_network_rx_bps{site_id!=""}[5m]) + 
+       quantile_over_time(0.95, appliance_network_tx_bps{site_id!=""}[5m])
 
     - record: appgate:gateway_sessions_quantile_95_over_1d:number
       expr: quantile_over_time(0.95, gateway_nr_sessions[1d])
 
-    - record: appgate:gateway_sessions_quantile_95_over_3h:number
-      expr: quantile_over_time(0.95, gateway_nr_sessions[3h])
+    - record: appgate:gateway_sessions_quantile_95_over_1h:number
+      expr: quantile_over_time(0.95, gateway_nr_sessions[1h])
 
     - record: appgate:distinct_user_count_quantile_95_over_1d:number 
       expr: quantile_over_time(0.95, session_distinct_user_count[1d])
-  
+
+    - record: appgate:distinct_user_count_quantile_95_over_1h:number
+      expr: quantile_over_time(0.95, session_distinct_user_count[1d])
+    
     - record: appgate:site_degradation:percentage
       expr: >
         100 * count(appliance_status_online{ role_gateway="true", online="false" }) by (target, site_id, appliance_name)/
