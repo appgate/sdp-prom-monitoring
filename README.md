@@ -172,13 +172,32 @@ If you want to use a single htpasswd file, then create symlinks to it with the p
 
 
 
+### Alert rules and alert manager
+There are just a few alerts defined in `prometheus/alert.rules`. The alerts are to notify about the system/instances/nodes and are not related to AppGate. Alerts are shown in a dedicated dashboard in grafana, deployed when provisioned. 
 
+You can add more alerts, and in the `alertmanager/config.yml` you can specify external receivers for alerts, example using slack:
+```  
+route:
+receiver: 'slack':
+receivers:
+  - name: 'slack'
+    slack_configs:
+      - send_resolved: true
+        username: '<username>'
+        channel: '#<channel-name>'
+        api_url: '<incomming-webhook-url>'%
+``` 
 
-### deploy
+## Deploy
+
 ``` 
 export DOMAIN=<domain>
 export LE_EMAILADDRESS=<emaoiladdress>
+``` 
 
-
+``` 
 HOSTNAME=$(hostname) docker stack deploy -c appgate-monitor-stack.yml agmon
 ``` 
+
+
+
