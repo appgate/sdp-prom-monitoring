@@ -19,10 +19,10 @@ This is currently been worked on.
 
 
 * Technology used:
-	* treaefik, edge router (reverse proxy)
-	* conkolla, prometheus to appgate connector and prom exporter
-	* prometheus et.al, scraper, database
-	* grafana, visualization and alerting front-end
+	* [treaefik](https://docs.traefik.io/), edge router (reverse proxy)
+	* [conkolla](https://github.com/appgate/conkolla/), prometheus to appgate connector and prom exporter
+	* [prometheus](https://prometheus.io/), et.al, scraper, database
+	* [grafana](https://grafana.com/), visualization and alerting front-end
 
 ## Preparations:
 
@@ -33,7 +33,7 @@ This is currently been worked on.
 	* agprometheus.${DOMAIN}
 	* aggrafana.{DOMAIN}
 
-You can deploy the stack to an existing swarm. In this guide we setup a dedicated host and docker swarm. The host specs are as the following, assuming collective(s) with up to 60 appliances and using 90days retention in tsdb. 
+You can deploy the stack to an existing swarm. In this guide we setup a dedicated host and docker swarm. The host specs are as the following, assuming collective(s) with up to 60 appliances and using 90days retention of the time series (tsdb). 
 The heavier queries prometheus/grafana will perform, the more memory and CPU you will require. For now, the following specs are proven to work fine:
 * AWS: t3.standard, EC2 Amazon Linux Type 2
 * Azure: Centos 7
