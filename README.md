@@ -6,7 +6,7 @@ The metrics are a subset of the AppGate appliance's on-board prometheus exporter
 
 This is currently been worked on.
 
-## introduction
+## Overview
 
 * architecture: Docker stack deployed on docker swarm
   	* Reverse proxy as entry point and certificate resolver
@@ -18,13 +18,13 @@ This is currently been worked on.
 
 
 
-* technology used in docker swarm:
+* technology used:
 	* treaefik, edge router
 	* conkolla, prometheus to appgate connector and prom exporter
 	* prometheus et.al, scraper, database
 	* grafana, visualization and alerting front-end
 
-## preperations:
+## Preparations:
 
 * Domain name `packnot.com`
 * 4 DNS A records (or alias) to the hosts:
