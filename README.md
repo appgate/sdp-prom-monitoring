@@ -108,11 +108,11 @@ sudo setsebool httpd_can_network_connect 1 -P # allow conns (outgoing docker), a
 
 ## Configure
 
-
 ```shell
-$ git clone https://github.com/......git
+$ git clone https://github.com/appgate/appgate-prom-monitoring.git
 $ cd agmon
 ```
+
 ### Grafana
 Adjust any settings if required in grafana/config.monitoring:
 * The initial password can be replaced for user `admin`, but must match same one in `htapass/grafana_users`. You can later change and add users through the Grafana UI, and you always need to add them in the `grafana_users` as well.
