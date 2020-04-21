@@ -115,17 +115,17 @@ $ cd agmon
 
 ### Grafana
 Adjust any settings if required in grafana/config.monitoring:
-* The initial password can be replaced for user `admin`, but must match same one in `htapass/grafana_users`. You can later change and add users through the Grafana UI, and you always need to add them in the `grafana_users` as well.
-* Set the hosT name for Grafana: `GF_SERVER_ROOT_URL=https://grafana.${DOMAIN}`  
+* The initial password can be replaced for user `admin`, but must match same one in `htapass/grafana_users`. You can later change and add users through the grafana UI, and you always need to add them in the `grafana_users` as well.
+* Set the host name for grafana: `GF_SERVER_ROOT_URL=https://grafana.${DOMAIN}`  
 
 
 ### Conkolla setup
 The conkolla can either connect automatically via:
 1. Connection definition from file 
-2. Manually through the UI on agconkolla.${DOMAIN}
+2. Manually through the UI on `agconkolla.${DOMAIN}`
 3. By an API call/operator process
 
-Conkolla support [AWS KMS](https://github.com/appgate/conkolla#kms-external-encryptiondecryption-provider) and can be given a base64 encoded AWS KMS blob with the additional parameters to decrytp/encrypt. You must use `auto token renwel` such conkolla alway can fetch the data from the controller. Please read in the [conkolla doc](https://github.com/appgate/conkolla#prometheus-metrics) how to setup a conkolla user on the AppGate controller.
+Conkolla support [AWS KMS](https://github.com/appgate/conkolla#kms-external-encryptiondecryption-provider) and can be given a base64 encoded AWS KMS blob with the additional parameters to decrytp/encrypt. You must use `auto token renwel` such conkolla always can fetch the data from the controller. Please read in the [conkolla doc](https://github.com/appgate/conkolla#prometheus-metrics) how to setup a conkolla user on the AppGate controller.
 
 In this example we are using a connections.yml file with a plain text password for simplicity. An example will follow on a separate page to set up with an EC2 instance, IAM role and KMS. Now, the configuration file `conkolla/connections.yml` can have an example setup:
 ```
