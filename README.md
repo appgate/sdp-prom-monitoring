@@ -2,7 +2,7 @@
 This is the docker compose stack for a quick setup monitoring with AppGate SDP. Instrumentation is done via the AppGate API, and all the metrics are established through a translation of gathered information. 
 The metrics are a subset of the AppGate appliance's on-board prometheus exporter (snmp-exporter). Despite the simplicity of the information, we have found that these metrics offer a good basis to build a system state view and actionable events.
 
->Logging, log message, request and message tracing is not part this work. 
+>Logging, log message, request and message tracing is not part of this work. 
 
 This is currently been worked on.
 
@@ -34,7 +34,7 @@ This is currently been worked on.
 	* aggrafana.{DOMAIN}
 
 You can deploy the stack to an existing swarm. In this guide we setup a dedicated host and docker swarm. The host specs are as the following, assuming collective(s) with up to 60 appliances and using 90days retention in tsdb. 
-The heavier queries prometheus/grafan will perform, the more memory and CPU you will require. For now, the following specs are proven to work fine:
+The heavier queries prometheus/grafana will perform, the more memory and CPU you will require. For now, the following specs are proven to work fine:
 * AWS: t3.standard, EC2 Amazon Linux Type 2
 * Azure: Centos 7
 * Disk, SSD: 40GB
