@@ -18,8 +18,8 @@ This is currently been worked on.
 
 
 
-* TEchnology used:
-	* treaefik, edge router
+* Technology used:
+	* treaefik, edge router (reverse proxy)
 	* conkolla, prometheus to appgate connector and prom exporter
 	* prometheus et.al, scraper, database
 	* grafana, visualization and alerting front-end
