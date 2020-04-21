@@ -27,7 +27,7 @@ This is currently been worked on.
 ## Preparations:
 
 * Domain name `packnot.com`
-* 4 DNS A records (or alias) to the hosts:
+* 4 DNS A records (or alias) pointing to the host IP:
 	* agtraefik.${DOMAIN}
 	* agconkolla.{DOMAIN}
 	* agprometheus.${DOMAIN}
