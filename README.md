@@ -114,10 +114,36 @@ $ cd agmon
 ```
 
 ### Grafana
-Adjust any settings if required in grafana/config.monitoring:
+Adjust any settings if required in `grafana/config.monitoring`:
 * The initial password can be replaced for user `admin`, but must match same one in `htapass/grafana_users`. You can later change and add users through the grafana UI, and you always need to add them in the `grafana_users` as well.
 * Set the host name for grafana: `GF_SERVER_ROOT_URL=https://grafana.${DOMAIN}`  
 
+
+#### Dashboards
+We provision a set of dashboards during deployment from the directory: `grafana/provisioning/dashboards`: 
+* AppGate Dashboard
+* AppGate Appliances info
+* AppGate Details on users, sessions, bandwidth etc
+* Conkolla monitoring
+* Docker resource monitoring
+
+The provisioning configuration is defined in the `dashboard.json` file, defaults are: 
+
+``` 
+apiVersion: 1
+providers:
+- name: 'Prometheus'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: false
+  editable: true
+  allowUiUpdates: true
+  options:
+    path: /etc/grafana/provisioning/dashboards
+```
+
+[Read grafana documentation regarding use of provisioned dashboard](https://grafana.com/docs/grafana/latest/administration/provisioning/#dashboards)
 
 ### Conkolla setup
 The conkolla can either connect automatically via:
