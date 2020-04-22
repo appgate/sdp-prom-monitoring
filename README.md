@@ -25,25 +25,32 @@ This is currently been worked on.
 	* [grafana](https://grafana.com/), visualization and alerting front-end
 
 ## Preparations:
+### DNS
+The subsystems will be accessible from the host's IP address. Every subsystem is routed via a host name. They are defined in the docker stack file, and by default require the bellow host names. You will later match the DOMAIN name for the deployment with a environment variable. For now, you will need prepare on a domain owned by you the following records:
+* Four A records (or alias) pointing to the host IP:
+	* agtraefik.`${DOMAIN}`
+	* agconkolla.`{DOMAIN}`
+	* agprometheus.`${DOMAIN}`
+	* aggrafana.`{DOMAIN}`
 
-* Domain name `packnot.com`
-* 4 DNS A records (or alias) pointing to the host IP:
-	* agtraefik.${DOMAIN}
-	* agconkolla.{DOMAIN}
-	* agprometheus.${DOMAIN}
-	* aggrafana.{DOMAIN}
 
+### TLS certs
+Traefik is taking care of the certificate resolving for the subsystems host certs. You will need simply provide an email address which will be used by traefik for let's encrypt account. No email conversations will be required. The email will be set, as described below, before deployment in a environment variable.
+
+### Network requirements
+Incoming traffic needs to reach to the host on:
+* `80/TCP` for let's encrypt (from any)
+* `443/TCP` for entry-point for traefik (from any/restricted)
+
+### Host
 You can deploy the stack to an existing swarm. In this guide we setup a dedicated host and docker swarm. The host specs are as the following, assuming collective(s) with up to 60 appliances and using 90days retention of the time series (tsdb). 
 The heavier queries prometheus/grafana will perform, the more memory and CPU you will require. For now, the following specs are proven to work fine:
 * AWS: t3.standard, EC2 Amazon Linux Type 2
 * Azure: Centos 7
 * Disk, SSD: 40GB
 
-Networking:
-* `80/TCP in <src>` for let's encrypt
-* `443/TCP in <src>` for entry-point for traefik
 
-### Prepare EC2 Amazon linux Type 2
+#### Prepare EC2 Amazon linux Type 2
 ``` 
 sudo amazon-linux-extras install docker
 sudo systemctl enable docker
@@ -60,7 +67,7 @@ Git
 sudo yum -y  install git
 ``` 
 
-### Prepare CentOS7 (Azure)
+#### Prepare CentOS7 (Azure)
 Installing [docker community engine](https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository). Boils down to:
 
 ```
