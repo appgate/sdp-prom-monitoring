@@ -895,7 +895,8 @@
   "style": "dark",
   "tags": [
     "conkolla",
-    "exporter"
+    "exporter",
+    "provisioned"
   ],
   "templating": {
     "list": []

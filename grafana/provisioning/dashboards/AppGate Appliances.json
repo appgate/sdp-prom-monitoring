@@ -451,7 +451,8 @@
   "style": "dark",
   "tags": [
     "appliances",
-    "appgate"
+    "appgate",
+    "provisioned"
   ],
   "templating": {
     "list": []

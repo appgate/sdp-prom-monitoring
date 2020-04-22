@@ -707,7 +707,8 @@
     "users",
     "sessions",
     "appgate",
-    "bandwidth"
+    "bandwidth",
+    "provisioned"
   ],
   "templating": {
     "list": [

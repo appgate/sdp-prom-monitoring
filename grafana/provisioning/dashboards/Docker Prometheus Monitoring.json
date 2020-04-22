@@ -1646,7 +1646,8 @@
     "docker",
     "prometheus, ",
     "node-exporter",
-    "cadvisor"
+    "cadvisor",
+    "provisioned"
   ],
   "templating": {
     "list": [
