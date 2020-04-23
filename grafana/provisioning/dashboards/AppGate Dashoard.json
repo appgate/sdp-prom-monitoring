@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1587506784086,
+  "id": 4,
+  "iteration": 1587542280526,
   "links": [],
   "panels": [
     {
@@ -1135,7 +1135,7 @@
       ],
       "targets": [
         {
-          "expr": "count_values(\"version\", appliance_major_version*100 + appliance_minor_version*10 + appliance_patch_version) by (target)",
+          "expr": "appgate:appliance_version_count:labels_to_table{target=\"$target\"}",
           "instant": true,
           "interval": "",
           "legendFormat": "{{version}}",
@@ -1750,5 +1750,5 @@
   "variables": {
     "list": []
   },
-  "version": 10
+  "version": 2
 }

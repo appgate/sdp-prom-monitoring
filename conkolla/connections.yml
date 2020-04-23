@@ -1,0 +1,42 @@
+---
+version: 1
+connections:
+- controllerURL: skip.packnot.com 
+  username: admin
+  password: -------
+  skipVerifySSL: true
+  autoTokenRenewal: true
+  promCollector: true
+...
+
+## Template
+- controllerURL: ""
+  controllerPort: 0
+  username: ""
+  password: ""
+  otp: ""
+  providerName: ""
+  apiVersion: 0
+  acceptHeaderSuffix: ""
+  contentTypeHeader: ""
+  label: ""
+  machineId: ""
+  showToken: ""
+  skipVerifySSL: ""
+  dumpAGResponse: ""
+  autoTokenRenewal: ""
+  renewToken: ""
+  promCollector: ""
+  promTargetName: ""
+  promLabelExporter: ""
+  promLabelEnvironment: ""
+  promLabelGroup: ""
+  promLabelSite: ""
+  PromLabelRegion: ""
+  promLabelCountry: ""
+  promLabelCustomer: ""
+  promLabelCostID: ""
+  kmsBlob: ""
+  kmsProvider: ""
+  kmsKey: ""
+  kmsRegion: ""
