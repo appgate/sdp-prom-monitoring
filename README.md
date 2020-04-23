@@ -67,6 +67,11 @@ Git
 sudo yum -y  install git
 ``` 
 
+htpasswd
+``` 
+yum -y install httpd-tools
+```
+
 #### Prepare CentOS7 (Azure)
 Installing [docker community engine](https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository). Boils down to:
 
@@ -104,6 +109,10 @@ sudo setfacl -m user:${USER}:rw /var/run/docker.sock
 Git
 ```
 sudo yum -y  install git
+```
+Htpasswd
+``` 
+yum -y install httpd-tools
 ```
 
 SELinux changes:
@@ -197,10 +206,10 @@ In prometheus/prometheus.yml, define job(s) according to the conkolla setup. Def
 ```
 
 * create htpasswd users: 
-   * `htpasswd -c htapass/grafana_users`
-   * `htpasswd -c htapass/prometheus_users`
-   * `htpasswd -c htapass/conkolla_users`
-   * `htpasswd -c htapass/traefik_users`
+   * `htpasswd -c htapass/grafana_users admin`
+   * `htpasswd -c htapass/prometheus_users admin`
+   * `htpasswd -c htapass/conkolla_users admin`
+   * `htpasswd -c htapass/traefik_users admin`
 
 If you want to use a single htpasswd file, then create symlinks to it with the path and name as listed above.
 
@@ -230,7 +239,7 @@ export LE_EMAILADDRESS=<emaoiladdress>
 ``` 
 
 ``` 
-HOSTNAME=$(hostname) docker stack deploy -c appgate-monitor-stack.yml agmon
+HOSTNAME=$(hostname) docker stack deploy -c docker-appgate-monitor-stack.yml agmon
 ``` 
 
 
