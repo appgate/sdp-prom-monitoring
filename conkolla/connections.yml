@@ -9,7 +9,8 @@ connections:
   kmsRegion: "eu-north-1"
   skipVerifySSL: true
   autoTokenRenewal: true
-  promCollector: true...
+  promCollector: true
+  ...
 
 ## Template
 - controllerURL: ""
