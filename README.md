@@ -8,7 +8,7 @@ This is currently been worked on.
 
 ## Overview
 
-* Architecture: Docker stack deployed on docker swarm
+### Achitecture: Docker stack deployed on docker swarm
   	* Reverse proxy as entry point and certificate resolver
   	* Grafana with prometheus & Co, time series database
   	* AppGate SDP remote prometheus exporter connecting to one or many AppGate SDP collectives
@@ -18,11 +18,42 @@ This is currently been worked on.
 
 
 
-* Technology used:
+### Technology used:
 	* [treaefik](https://docs.traefik.io/), edge router (reverse proxy)
 	* [conkolla](https://github.com/appgate/conkolla/), prometheus to appgate connector and prom exporter
 	* [prometheus](https://prometheus.io/), et.al, scraper, database
 	* [grafana](https://grafana.com/), visualization and alerting front-end
+
+### Documents
+``` 
+├── docker-appgate-monitor-stack.yml
+├── alertmanager
+│   └── config.yml
+├── conkolla
+│   └── connections.yml
+├── grafana
+│   ├── config.monitoring
+│   └── provisioning
+│       ├── dashboards
+│       │   ├── AppGate\ Appliances.json
+│       │   ├── AppGate\ Dashoard.json
+│       │   ├── AppGate\ Details.json
+│       │   ├── dashboard.yml
+│       │   ├── Docker\ Conkolla\ Monitoring.json
+│       │   └── Docker\ Prometheus\ Monitoring.json
+│       └── datasources
+│           └── datasource.yml
+├── htapass
+├── letsencrypt
+├── prometheus
+│   ├── alert.rules
+│   ├── appgate.rules
+│   ├── conkolla.rules
+│   └── prometheus.yml
+```
+
+
+
 
 ## Preparations:
 ### DNS
