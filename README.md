@@ -9,9 +9,9 @@ This is currently been worked on.
 ## Overview
 
 ### Achitecture: Docker stack deployed on docker swarm
-  	* Reverse proxy as entry point and certificate resolver
-  	* Grafana with prometheus & Co, time series database
-  	* AppGate SDP remote prometheus exporter connecting to one or many AppGate SDP collectives
+* Reverse proxy as entry point and certificate resolver
+* Grafana with prometheus & Co, time series database
+* AppGate SDP remote prometheus exporter connecting to one or many AppGate SDP collectives
 
 
 ![architecture](./agprom-architecture.png)
@@ -19,10 +19,10 @@ This is currently been worked on.
 
 
 ### Technology used:
-	* [treaefik](https://docs.traefik.io/), edge router (reverse proxy)
-	* [conkolla](https://github.com/appgate/conkolla/), prometheus to appgate connector and prom exporter
-	* [prometheus](https://prometheus.io/), et.al, scraper, database
-	* [grafana](https://grafana.com/), visualization and alerting front-end
+* [treaefik](https://docs.traefik.io/), edge router (reverse proxy)
+* [conkolla](https://github.com/appgate/conkolla/), prometheus to appgate connector and prom exporter
+* [prometheus](https://prometheus.io/), et.al, scraper, database
+* [grafana](https://grafana.com/), visualization and alerting front-end
 
 ### Documents
 ``` 
