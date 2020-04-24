@@ -8,7 +8,8 @@ This is currently been worked on.
 
 ## Overview
 
-### Achitecture: Docker stack deployed on docker swarm
+### Achitecture
+Docker stack deployed on docker swarm
 * Reverse proxy as entry point and certificate resolver
 * Grafana with prometheus & Co, time series database
 * AppGate SDP remote prometheus exporter connecting to one or many AppGate SDP collectives
