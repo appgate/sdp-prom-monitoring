@@ -2,6 +2,7 @@
 version: 1
 connections:
 - controllerURL: skip.packnot.com 
+  username: admin
   password: AQICAHg1y1vXpOYWhETsIj2dDXa5jJrN+bJWtGu3Q4GM9o5c+QGGH/Gf1eng50epoEMh3pqGAAAAZTBjBgkqhkiG9w0BBwagVjBUAgEAME8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMfUFJxInMFGkQscNOAgEQgCLk4WNrMENV50otKgrrNdaBLoeCTGeB0r5i3IS5zKoqlVFa
   kmsBlob: "true"
   kmsProvider: "aws"
