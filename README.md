@@ -52,7 +52,7 @@ The heavier queries prometheus/grafana will perform, the more memory and CPU you
 
 #### Prepare EC2 Amazon linux Type 2
 ``` 
-sudo amazon-linux-extras install docker
+sudo amazon-linux-extras install -y docker
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo docker swarm init
@@ -69,7 +69,7 @@ sudo yum -y  install git
 
 htpasswd
 ``` 
-yum -y install httpd-tools
+sudo yum -y install httpd-tools
 ```
 
 #### Prepare CentOS7 (Azure)
