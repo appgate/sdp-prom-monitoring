@@ -11,7 +11,7 @@ connections:
   skipVerifySSL: true
   autoTokenRenewal: true
   promCollector: true
-  ...
+...
 
 ## Template
 - controllerURL: ""
