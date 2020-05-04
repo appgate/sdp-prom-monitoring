@@ -19,6 +19,7 @@ services:
         #- "--api.insecure=true"
       - "--api.dashboard=true"
       - "--api=true"
+      - "--serverstransport.insecureskipverify=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
@@ -61,7 +62,6 @@ services:
       - "--getOnly" 
       - "--whiteListMonitoring"
       - "--noAuth"
-      - "--http"
 
     networks:
       - monitor-net
