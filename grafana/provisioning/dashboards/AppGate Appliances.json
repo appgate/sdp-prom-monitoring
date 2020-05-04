@@ -564,10 +564,7 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "text": "skip.packnot.com",
-          "value": "skip.packnot.com"
-        },
+        "current": { },
         "datasource": "Prometheus",
         "definition": "appliance_major_version",
         "hide": 0,
@@ -576,13 +573,7 @@
         "label": null,
         "multi": false,
         "name": "target",
-        "options": [
-          {
-            "selected": true,
-            "text": "skip.packnot.com",
-            "value": "skip.packnot.com"
-          }
-        ],
+        "options": [],
         "query": "appliance_major_version",
         "refresh": 0,
         "regex": "/.*target=\"([^\"]*).*/",
