@@ -157,8 +157,7 @@ sudo setsebool httpd_can_network_connect 1 -P # allow conns (outgoing docker), a
 ## Configure
 
 ```shell
-$ git clone https://github.com/appgate/appgate-prom-monitoring.git
-$ cd agmon
+git clone https://github.com/appgate/appgate-prom-monitoring.git
 ```
 
 ### Grafana
