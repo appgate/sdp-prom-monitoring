@@ -166,6 +166,7 @@ Adjust any settings if required in `grafana/config.monitoring`:
 * The initial password can be replaced for user `admin`, but must match same one in `htapass/grafana_users`. You can later change and add users through the grafana UI, and you always need to add them in the `grafana_users` as well.
 * Set the host name for grafana: `GF_SERVER_ROOT_URL=https://grafana.${DOMAIN}`  
 
+Note: you can also use docker secrets or any other secret/vault handler and use a volume to mount password and other flags, [see here for  more information](https://grafana.com/docs/grafana/latest/installation/configure-docker/#configure-grafana-with-docker-secrets).
 
 #### Dashboards
 We provision a set of dashboards during deployment from the directory: `grafana/provisioning/dashboards`: 
