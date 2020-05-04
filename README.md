@@ -264,15 +264,48 @@ receivers:
 ``` 
 
 ## Deploy
-
+Set the env variables (or set them in the docker compose file by hand)
 ``` 
 export DOMAIN=<domain>
 export LE_EMAILADDRESS=<emaoiladdress>
 ``` 
-
+Run the deployment:
 ``` 
 HOSTNAME=$(hostname) docker stack deploy -c docker-appgate-monitor-stack.yml agmon
 ``` 
+### Maintain, update, trouble shoot 
 
+Check the services:
+```
+docker service ls
+```
 
+Access logfiles: 
+``` 
+docker service logs [-f] <service_name>
+```
 
+Update an image for a service (see the compose file for image details):
+```
+docker pull grafana/grafana
+docker service update --image grafana/grafana <service_name>
+```
+
+Update a service after the service's config file changed:
+``` 
+docker service update --force <service_name>
+``` 
+
+Update the deployment when the compose file changed:
+* same as `run the deployment`. 
+* Make sure environment variables are set (or set in the compose file).
+
+List the volumes
+```
+docker volume ls
+```
+
+Inspect volumes of grafana/prometheus stored data:
+``` 
+docker volume inspect <volume_name>
+```
