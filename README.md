@@ -273,7 +273,7 @@ Run the deployment:
 ``` 
 HOSTNAME=$(hostname) docker stack deploy -c docker-appgate-monitor-stack.yml agmon
 ``` 
-After the deployment has succesfully finished you might give it a minute so traefik can generate the TLS certificates. Then verify you can get to the edmpoints the endpoints:
+After the deployment has successfully finished you might give it a minute so traefik can generate the TLS certificates. Then verify you can get to the endpoints the endpoints:
 * https://agtraefik.`${DOMAIN}`
 * https://agconkolla.`{DOMAIN}`
 * https://agprometheus.`${DOMAIN}`
