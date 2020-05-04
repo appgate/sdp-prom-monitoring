@@ -1,4 +1,4 @@
-# AppGate monitoring
+# AppGate SDP monitoring
 This is the docker compose stack for a quick setup monitoring with AppGate SDP. Instrumentation is done via the AppGate API, and all the metrics are established through a translation of gathered information. 
 The metrics are a subset of the AppGate appliance's on-board prometheus exporter (snmp-exporter). Despite the simplicity of the information, we have found that these metrics offer a good basis to build a system state view and actionable events.
 
