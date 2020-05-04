@@ -273,6 +273,19 @@ Run the deployment:
 ``` 
 HOSTNAME=$(hostname) docker stack deploy -c docker-appgate-monitor-stack.yml agmon
 ``` 
+After the deployment has succesfully finished you might give it a minute so traefik can generate the TLS certificates. Then verify you can get to the edmpoints the endpoints:
+* https://agtraefik.`${DOMAIN}`
+* https://agconkolla.`{DOMAIN}`
+* https://agprometheus.`${DOMAIN}`
+* https://aggrafana.`{DOMAIN}`
+	
+#### Grafana update variables	
+When loading the grafana dashboards you will need to update the variables which are used to select metrics (target) for displaying:
+* On the dashboard do: 
+	1. dashboard settings > Variables > click on `$target` > press `Update`
+	1. press `Save Dashboard`
+	
+
 ### Maintain, update, trouble shoot 
 
 Check the services:
