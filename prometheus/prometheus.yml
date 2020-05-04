@@ -64,6 +64,9 @@ scrape_configs:
 
   - job_name: 'conkolla'
     # The instate details of conkolla itself
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
     dns_sd_configs:
     - names:
       - 'tasks.conkolla'
@@ -72,12 +75,14 @@ scrape_configs:
 
     honor_timestamps: true
     metrics_path: /metrics
-    scheme: http
     params:
       target: [conkolla]
 
       ## Add targets from upstream, one per job:
   - job_name: 'skip.packnot.com'
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
     dns_sd_configs:
     - names:
       - 'tasks.conkolla'
@@ -87,7 +92,6 @@ scrape_configs:
     honor_timestamps: true
     honor_labels: true
     metrics_path: /metrics
-    scheme: http
     params:
       target: [skip.packnot.com]
     relabel_configs:
