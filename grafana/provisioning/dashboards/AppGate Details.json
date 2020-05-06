@@ -66,7 +66,7 @@
           "refId": "A"
         },
         {
-          "expr": "appgate:distinct_user_count_quantile_95_over_1d:number{target=\"$target\"}",
+          "expr": "sum(appgate:distinct_user_count_quantile_95_over_1d:number{target=\"$target\"})",
           "interval": "",
           "legendFormat": "Users {{target}}",
           "refId": "B"
@@ -166,14 +166,8 @@
           "intervalFactor": 3,
           "legendFormat": "Over 5 minutes",
           "refId": "B"
-        },
-        {
-          "expr": "appga",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "C"
         }
-      ],
+       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
