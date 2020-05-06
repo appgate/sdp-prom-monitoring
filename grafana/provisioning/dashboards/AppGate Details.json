@@ -60,13 +60,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "appgate:gateway_sessions_quantile_95_over_1d:number{target=\"$target\"}",
+          "expr": "sum(appgate:gateway_sessions_quantile_95_over_1d:number{target=\"$target\"})",
           "interval": "",
           "legendFormat": "Sessions {{target}}",
           "refId": "A"
         },
         {
-          "expr": "appgate:distinct_user_count_quantile_95_over_1d:number{target=\"target\"}",
+          "expr": "appgate:distinct_user_count_quantile_95_over_1d:number{target=\"$target\"}",
           "interval": "",
           "legendFormat": "Users {{target}}",
           "refId": "B"
