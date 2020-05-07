@@ -279,12 +279,6 @@ After the deployment has successfully finished you might give it a minute so tra
 * https://agprometheus.`${DOMAIN}`
 * https://aggrafana.`{DOMAIN}`
 	
-#### Grafana update variables	
-When loading the grafana dashboards you will need to update the variables which are used to select metrics (target) for displaying:
-* On the dashboard do: 
-	1. dashboard settings > Variables > click on `$target` > press `Update`
-	1. press `Save Dashboard`
-	
 
 ### Maintain, update, trouble shoot 
 
