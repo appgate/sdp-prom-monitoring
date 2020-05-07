@@ -4,7 +4,16 @@ The metrics are a subset of the AppGate appliance's on-board prometheus exporter
 
 >Logging, log message, request and message tracing is not part of this work. 
 
-This is currently been worked on.
+
+## Screenshots
+### Dashboard with current stats
+![Dashboard](./images/dashboard.png)
+### Bandwidth, current and historical data
+![bandwidth](./images/bandwidth.png)
+### Appliances, resources and site degradation
+![appliances](./images/appliances.png)
+
+
 
 ## Overview
 
