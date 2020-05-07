@@ -853,7 +853,7 @@
         "name": "target",
         "options": [],
         "query": "appliance_major_version",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "/.*target=\"([^\"]*).*/",
         "skipUrlSync": false,
         "sort": 1,
