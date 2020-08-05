@@ -70,7 +70,7 @@ Docker stack deployed on docker swarm
 The subsystems will be accessible from the host's IP address. Every subsystem is routed via a host name. They are defined in the docker stack file, and by default require the bellow host names. You will later match the DOMAIN name for the deployment with a environment variable. For now, you will need prepare on a domain owned by you the following records:
 * Four A records (or alias) pointing to the host IP:
 	* agtraefik.`${DOMAIN}`
-	* agconkolla.`{DOMAIN}`
+	* agconkolla.`${DOMAIN}`
 	* agprometheus.`${DOMAIN}`
 	* aggrafana.`{DOMAIN}`
 
@@ -246,15 +246,6 @@ In prometheus/prometheus.yml, define job(s) according to the conkolla setup. Def
          target_label: target
 ```
 
-* create htpasswd users: 
-   * `htpasswd -c htapass/grafana_users admin`
-   * `htpasswd -c htapass/prometheus_users admin`
-   * `htpasswd -c htapass/conkolla_users admin`
-   * `htpasswd -c htapass/traefik_users admin`
-
-If you want to use a single htpasswd file, then create symlinks to it with the path and name as listed above.
-
-
 
 ### Alert rules and alert manager
 There are just a few alerts defined in `prometheus/alert.rules`. The alerts are to notify about the system/instances/nodes and are not related to AppGate. Alerts are shown in a dedicated dashboard in grafana, deployed when provisioned. 
@@ -271,6 +262,15 @@ receivers:
         channel: '#<channel-name>'
         api_url: '<incomming-webhook-url>'%
 ``` 
+### Passwords for basic authentication
+If you want to use a single htpasswd file, then create symlinks to it with the same name as the expected file name depicted in the list below.
+
+* create htpasswd users: 
+   * `htpasswd -c htapass/grafana_users admin`
+   * `htpasswd -c htapass/prometheus_users admin`
+   * `htpasswd -c htapass/conkolla_users admin`
+   * `htpasswd -c htapass/traefik_users admin`
+
 
 ## Deploy
 Set the env variables (or set them in the docker compose file by hand)
@@ -278,7 +278,7 @@ Set the env variables (or set them in the docker compose file by hand)
 export DOMAIN=<domain>
 export LE_EMAILADDRESS=<emaoiladdress>
 ``` 
-Run the deployment:
+Run the deployment from the directory of the yml file. This is due to how the docker configuration currently defines paths to mount.
 ``` 
 HOSTNAME=$(hostname) docker stack deploy -c docker-appgate-monitor-stack.yml agmon
 ``` 
