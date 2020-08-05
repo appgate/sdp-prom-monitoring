@@ -74,7 +74,7 @@ services:
         - "traefik.enable=true"
         - "traefik.http.routers.ck.rule=Host(`agconkolla.${DOMAIN}`)"
         - "traefik.http.services.ck.loadbalancer.server.port=4433"
-        - "traefik.http.services.ck.loadbalancer.server.scheme=http"
+        - "traefik.http.services.ck.loadbalancer.server.scheme=https"
         - "traefik.http.routers.ck.entrypoints=websecure"
         - "traefik.http.middlewares.ckauth.basicauth.usersfile=/htapass/conkolla_users"
         - "traefik.http.routers.ck.middlewares=ckauth"
