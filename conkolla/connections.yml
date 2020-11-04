@@ -1,0 +1,46 @@
+---
+version: 1
+connections:
+- controllerURL: skip.packnot.com 
+  username: admin
+  password: AQICAHg1y1vXpOYWhETsIj2dDXa5jJrN+bJWtGu3Q4GM9o5c+QGGH/Gf1eng50epoEMh3pqGAAAAZTBjBgkqhkiG9w0BBwagVjBUAgEAME8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMfUFJxInMFGkQscNOAgEQgCLk4WNrMENV50otKgrrNdaBLoeCTGeB0r5i3IS5zKoqlVFa
+  kmsBlob: true
+  kmsProvider: "aws"
+  kmsKey: "157fa93e-1561-4567-af2e-cc153d6595f7"
+  kmsRegion: "eu-north-1"
+  skipVerifySSL: true
+  autoTokenRenewal: true
+  promCollector: true
+...
+
+## Template
+- controllerURL: ""
+  controllerPort: 0
+  username: ""
+  password: ""
+  otp: ""
+  providerName: ""
+  apiVersion: 0
+  acceptHeaderSuffix: ""
+  contentTypeHeader: ""
+  label: ""
+  machineId: ""
+  showToken: ""
+  skipVerifySSL: ""
+  dumpAGResponse: ""
+  autoTokenRenewal: ""
+  renewToken: ""
+  promCollector: ""
+  promTargetName: ""
+  promLabelExporter: ""
+  promLabelEnvironment: ""
+  promLabelGroup: ""
+  promLabelSite: ""
+  PromLabelRegion: ""
+  promLabelCountry: ""
+  promLabelCustomer: ""
+  promLabelCostID: ""
+  kmsBlob: ""
+  kmsProvider: ""
+  kmsKey: ""
+  kmsRegion: ""
