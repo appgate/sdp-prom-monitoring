@@ -57,8 +57,7 @@ Docker stack deployed on docker swarm
 ├── letsencrypt
 ├── prometheus
 │   ├── alert.rules
-│   ├── appgate.rules
-│   ├── conkolla.rules
+│   ├── recording.rules
 │   └── prometheus.yml
 ```
 
@@ -72,6 +71,7 @@ The subsystems will be accessible from the host's IP address. Every subsystem is
 	* agtraefik.`${DOMAIN}`
 	* agconkolla.`${DOMAIN}`
 	* agprometheus.`${DOMAIN}`
+	* agalertmanager.`${DOMAIN}`
 	* aggrafana.`{DOMAIN}`
 
 
@@ -268,6 +268,7 @@ If you want to use a single htpasswd file, then create symlinks to it with the s
 * create htpasswd users: 
    * `htpasswd -c htapass/grafana_users admin`
    * `htpasswd -c htapass/prometheus_users admin`
+   * `htpasswd -c htapass/alertmanager_users admin`
    * `htpasswd -c htapass/conkolla_users admin`
    * `htpasswd -c htapass/traefik_users admin`
 
@@ -286,6 +287,7 @@ After the deployment has successfully finished you might give it a minute so tra
 * https://agtraefik.`${DOMAIN}`/dashboard/
 * https://agconkolla.`{DOMAIN}`
 * https://agprometheus.`${DOMAIN}`
+* https://agalertmanager.`${DOMAIN}`
 * https://aggrafana.`{DOMAIN}`
 	
 

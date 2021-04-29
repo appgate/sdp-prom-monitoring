@@ -1,8 +1,7 @@
 groups:
-- name: example
+- name: basic rules
   rules:
-
-  # Alert for any instance that is unreachable for >2 minutes.
+# Alert for any instance that is unreachable for >2 minutes.
   - alert: service_down
     expr: up == 0
     for: 2m
@@ -20,3 +19,153 @@ groups:
     annotations:
       summary: "Instance {{ $labels.instance }} under high load"
       description: "{{ $labels.instance }} of job {{ $labels.job }} is under high load."
+- name: appgate rules
+  rules:
+  - alert: AGSaturationCPU
+    expr: avg_over_time(appliance_cpu_load_percentage[2m]) > 80
+    for: 1h
+    labels:
+      ascomp: appliance
+      astype: appgate
+      severity: warning
+    annotations:
+      description: High CPU usage for {{ $labels.target }} on {{ $labels.appliance_name }} value = {{ $value  | printf "%.2f" }}%
+      summary: AppGate appliance CPU Saturation over 80% warning
+  - alert: AGSaturationCPU
+    expr: avg_over_time(appliance_cpu_load_percentage[2m]) > 90
+    for: 15m
+    labels:
+      ascomp: appliance
+      astype: appgate
+      severity: critical
+    annotations:
+      description: High CPU usage for {{ $labels.target }} on {{ $labels.appliance_name }} value = {{ $value | printf "%.2f" }}%
+      summary: AppGate appliance CPU Saturation over 90% critical
+  - alert: AGSaturationMem
+    expr: avg_over_time(appliance_memory_usage_percentage[2m]) > 80
+    for: 1h
+    labels:
+      ascomp: appliance
+      astype: appgate
+      severity: warning
+    annotations:
+      description: High memory usage for {{$labels.target}} on {{ $labels.appliance_name }} value = {{ $value | printf "%.2f" }}%
+      summary: AppGate appliance memory saturation over 80% warning
+  - alert: AGSaturationMem
+    expr: avg_over_time(appliance_memory_usage_percentage[2m]) > 90
+    for: 15m
+    labels:
+      ascomp: appliance
+      astype: appgate
+      severity: critical
+    annotations:
+      description: High memory usage for {{$labels.target}} on {{ $labels.appliance_name }} value = {{ $value | printf "%.2f" }}%
+      summary: AppGate appliance memory saturation over 90% critical
+  - alert: AGSaturationDisk
+    expr: avg_over_time(appliance_disk_usage_percentage[1h]) > 80
+    for: 4h
+    labels:
+      ascomp: appliance
+      astype: appgate
+      severity: warning
+    annotations:
+      description: High disk usage for {{$labels.target}} on {{ $labels.appliance_name }} value = {{ $value | printf "%.2f" }}%
+      summary: AppGate appliance disk saturation over 80% warning for longer than {{ $labels.for }}
+  - alert: AGSaturationDisk
+    expr: avg_over_time(appliance_disk_usage_percentage[1h]) > 90
+    for: 15m
+    labels:
+      ascomp: appliance
+      astype: appgate
+      severity: critical
+    annotations:
+      description: High disk usage for {{$labels.target}} on {{ $labels.appliance_name }} value = {{ $value | printf "%.2f" }}%
+      summary: AppGate appliance disk saturation over 90% critical
+  - alert: AGApplianceOffline
+    expr: >-
+      appliance_status_online{online="false"} > 0
+    for: 10m
+    labels:
+      ascomp: appliance
+      astype: appgate
+      severity: critical
+    annotations:
+      description: Appliance {{ $labels.appliance_name }} of {{$labels.target}} is offline
+      summary: AppGate appliance offline critical. 
+  - alert: CKConnection4xx
+    expr: >-
+      sum by(target, metrics_endpoint_url) (rate(connection_http_response_code{http_response_code=~"4.."}[2m])) > 0
+    for: 5m
+    labels:
+      ascomp: conkolla
+      astype: monitoring
+      severity: critical
+      asscope: internal
+    annotations:
+      description: 4xx errors occured for {{ $labels.target }} to {{ $labels.metrics_endpoint_url }}\n VALUE = {{ $value }}
+      summary: Conkolla client side 4xx error occured critical
+  - alert: CKConnection5xx
+    expr: >-
+      sum by(target, metrics_endpoint_url) (rate(connection_http_response_code{http_response_code=~"5.."}[2m])) > 0
+    for: 9m
+    labels:
+      ascomp: conkolla
+      astype: monitoring
+      severity: critical
+      asscope: internal
+    annotations:
+      description: 5xx errors occured for {{ $labels.target }} to {{ $labels.metrics_endpoint_url }}\n VALUE = {{ $value }}
+      summary: Conkolla server side 5xx error occured critical
+  - alert: PrometheusTargetMissing
+    expr: up == 0
+    for: 1m
+    labels:
+      ascomp: prometheus
+      astype: monitoring
+      severity: critical
+    annotations:
+      description: A Prometheus target has disappeared. An exporter might be crashed.\n  VALUE = {{ $value }}
+      summary: Prometheus target missing (instance {{ $labels.instance }})
+  - alert: PrometheusRuleEvaluationFailures
+    expr: increase(prometheus_rule_evaluation_failures_total[3m]) > 0
+    for: 1m
+    labels:
+      ascomp: prometheus
+      astype: monitoring
+      severity: critical
+    annotations:
+      description: Prometheus encountered {{ $value }} rule evaluation failures, leading to potentially ignored alerts.
+      summary: Hosted Prometheus rule evaluation failures (instance {{ $labels.instance }})
+  - alert: PrometheusTemplateTextExpansionFailures
+    expr: increase(prometheus_template_text_expansion_failures_total[3m]) > 0
+    labels:
+      ascomp: prometheus
+      astype: monitoring
+      severity: critical
+    annotations:
+      description: 'Prometheus encountered {{ $value }} template text expansion failures\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}'
+      summary: Prometheus template text expansion failures (instance {{ $labels.instance }})
+  - alert: AGApdexProcessTime
+    expr: >-
+      conkolla:apdex_score_processtime_buckets_0c5_2c5_over_2m:percent_1 < 0.8
+    for: 10m
+    labels:
+      ascomp: api
+      astype: appgate
+      severity: warning
+    annotations:
+      description: 'The appgate process time apdexscore (0,5-2,5) has fallen below 80%'
+      summary: Apdex process time scrore dropped for {{ $labels.target }} {{ $labels.metrics_endpoint_url }} below {{ $value | printf "%.2f" }}
+  - alert: InfluxDataAbsent
+    expr: sum(absent(appliance_cpu_load_percentage)) > 0
+    for: 1m
+    labels:
+      asscope: internal
+      ascomp: prometheus
+      astype: monitoring
+      severity: critical
+    annotations:
+      description: Hosted prometheus does not receive any time series from collector
+      summary: Influxdata is absent
+
+
