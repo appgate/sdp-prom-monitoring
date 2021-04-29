@@ -20,7 +20,7 @@ The metrics are a subset of the Appgate appliance's on-board prometheus exporter
 ### Achitecture
 Docker stack deployed on docker swarm
 * Reverse proxy as entry point and certificate resolver
-* Grafana with prometheus & Co, time series database
+* Grafana with prometheus and alertmanager
 * Appgate SDP remote prometheus exporter connecting to one or many Appgate SDP collectives
 
 
@@ -31,7 +31,8 @@ Docker stack deployed on docker swarm
 ### Technology used:
 * [treaefik](https://docs.traefik.io/), edge router (reverse proxy)
 * [conkolla](https://github.com/appgate/conkolla/), prometheus to appgate connector and prom exporter
-* [prometheus](https://prometheus.io/), et.al, scraper, database
+* [prometheus](https://prometheus.io/), scraper, database
+* [prometheus alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) alertmanager
 * [grafana](https://grafana.com/), visualization and alerting front-end
 
 ### Documents
