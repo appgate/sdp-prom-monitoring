@@ -7,7 +7,9 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
         "name": "Annotations & Alerts",
+        "showIn": 0,
         "type": "dashboard"
       }
     ]
@@ -16,8 +18,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1588831103977,
+  "id": 1,
+  "iteration": 1619712107305,
   "links": [],
   "panels": [
     {
@@ -26,6 +28,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -53,9 +61,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -65,6 +74,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "appgate:appliance_cpu_avg_2m:percent{target=\"$target\"}",
           "interval": "",
           "legendFormat": "{{appliance_name}}",
@@ -115,6 +125,10 @@
     {
       "columns": [],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 5,
@@ -213,11 +227,15 @@
       "timeShift": null,
       "title": "Appliance Version",
       "transform": "timeseries_to_rows",
-      "type": "table"
+      "type": "table-old"
     },
     {
       "columns": [],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fontSize": "80%",
       "gridPos": {
         "h": 19,
@@ -352,7 +370,7 @@
       "timeShift": null,
       "title": "Appliance Details",
       "transform": "table",
-      "type": "table"
+      "type": "table-old"
     },
     {
       "aliasColors": {},
@@ -360,6 +378,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -387,9 +411,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -399,6 +424,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "appgate:appliance_memory_usage_avg_2m:percent{target=\"$target\"}",
           "interval": "",
           "legendFormat": "{{appliance_name}}",
@@ -452,6 +478,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -479,9 +511,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -491,6 +524,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "appgate:appliance_disk_usage_avg_2m:percent{target=\"$target\"}",
           "interval": "",
           "legendFormat": "{{appliance_name}}",
@@ -539,58 +573,18 @@
       }
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                0
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "10m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "Site is degraded in [%] of GWs/site count for longer > 10 mins",
-        "name": "COMP Site degradation",
-        "noDataState": "ok",
-        "notifications": [
-          {
-            "uid": "uVvblGpWk"
-          },
-          {
-            "uid": "6oCrAcbWz"
-          },
-          {
-            "uid": "Sl8HkVlWz"
-          }
-        ]
-      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -616,9 +610,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -635,16 +630,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 0,
-          "yaxis": "left"
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -686,54 +672,17 @@
       }
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                0
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "10m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "Apliance is offline for > 10m",
-        "name": "COMP Offline other than GW",
-        "noDataState": "ok",
-        "notifications": [
-          {
-            "uid": "uVvblGpWk"
-          },
-          {
-            "uid": "Sl8HkVlWz"
-          }
-        ]
-      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -759,9 +708,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -777,16 +727,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 0,
-          "yaxis": "left"
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -830,7 +771,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 22,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "appliances",
@@ -842,17 +783,25 @@
     "list": [
       {
         "allValue": null,
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "skip.packnot.com",
+          "value": "skip.packnot.com"
+        },
         "datasource": "Prometheus",
         "definition": "appliance_major_version",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": null,
         "multi": false,
         "name": "target",
         "options": [],
-        "query": "appliance_major_version",
+        "query": {
+          "query": "appliance_major_version",
+          "refId": "Prometheus-target-Variable-Query"
+        },
         "refresh": 1,
         "regex": "/.*target=\"([^\"]*).*/",
         "skipUrlSync": false,
@@ -886,8 +835,5 @@
   "timezone": "",
   "title": "AppGate Appliances",
   "uid": "vnOaRI_Zk",
-  "variables": {
-    "list": []
-  },
-  "version": 12
+  "version": 4
 }
