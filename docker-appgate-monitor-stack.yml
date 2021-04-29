@@ -11,7 +11,7 @@ networks:
 
 services:
   traefik:
-    image: "traefik:v2.2"
+    image: "traefik:v2.4"
     command:
       - "--providers.docker.swarmMode=true"
       - "--providers.docker.watch" 
@@ -105,6 +105,31 @@ services:
         - "traefik.http.middlewares.promauth.basicauth.usersfile=/htapass/prometheus_users"
         - "traefik.http.routers.prometheus.middlewares=promauth"
         - "traefik.http.routers.prometheus.tls.certresolver=letsencryptrs"
+      restart_policy:
+        condition: on-failure
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - "./alertmanager/:/etc/alertmanager/"
+    networks:
+      - monitor-net
+
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.alertmanager.rule=Host(`agalertmanager.${DOMAIN}`)"
+        - "traefik.http.services.alertmanager.loadbalancer.server.port=9093"
+        - "traefik.http.services.alertmanager.loadbalancer.server.scheme=http"
+        - "traefik.http.routers.alertmanager.entrypoints=websecure"
+        - "traefik.http.middlewares.alertmauth.basicauth.usersfile=/htapass/alertmanager_users"
+        - "traefik.http.routers.alertmanager.middlewares=alertmauth"
+        - "traefik.http.routers.alertmanager.tls.certresolver=letsencryptrs"
+      placement:
+        constraints:
+           - node.role==manager
       restart_policy:
         condition: on-failure
 
