@@ -65,7 +65,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "appgate:appliance_cpu_avg_5m:percent{target=\"$target\"}",
+          "expr": "appgate:appliance_cpu_avg_2m:percent{target=\"$target\"}",
           "interval": "",
           "legendFormat": "{{appliance_name}}",
           "refId": "A"
@@ -399,7 +399,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "appgate:appliance_memory_usage_avg_5m:percent{target=\"$target\"}",
+          "expr": "appgate:appliance_memory_usage_avg_2m:percent{target=\"$target\"}",
           "interval": "",
           "legendFormat": "{{appliance_name}}",
           "refId": "A"
@@ -491,7 +491,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "appgate:appliance_disk_usage_avg_5m:percent{target=\"$target\"}",
+          "expr": "appgate:appliance_disk_usage_avg_2m:percent{target=\"$target\"}",
           "interval": "",
           "legendFormat": "{{appliance_name}}",
           "refId": "A"
