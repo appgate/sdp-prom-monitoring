@@ -6,8 +6,10 @@ The metrics are a subset of the Appgate appliance's on-board prometheus exporter
 
 
 ## Screenshots
-### Dashboard with current stats
+### Dashboard with live stats and alerts
 ![Dashboard](./images/dashboard.png)
+### Alerts
+![Alerts](./images/alerts.png)
 ### Bandwidth, current and historical data
 ![bandwidth](./images/bandwidth.png)
 ### Appliances, resources and site degradation
