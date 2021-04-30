@@ -9,14 +9,28 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "datasource": "Prometheus",
+        "enable": true,
+        "expr": "ALERTS_FOR_STATE{} * 1000",
+        "hide": true,
+        "iconColor": "rgba(255, 96, 96, 1)",
+        "name": "Alerts annotations:",
+        "showIn": 0,
+        "step": "2s",
+        "tagKeys": "",
+        "textFormat": "{{alertname}}",
+        "titleFormat": "{{job}}",
+        "useValueForTime": true
       }
     ]
   },
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1598621555439,
+  "id": 2,
+  "iteration": 1619767173346,
   "links": [],
   "panels": [
     {
@@ -38,7 +52,6 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -48,7 +61,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -84,9 +96,10 @@
           "fields": "/^controller$/",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "sum(controller_count{target=\"$target\"})",
@@ -102,28 +115,25 @@
       "type": "stat"
     },
     {
-      "datasource": null,
-      "description": "controllers",
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "decimals": 0,
-          "mappings": [],
-          "min": 0,
-          "noValue": "...",
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "semi-dark-green",
                 "value": null
-              },
-              {
-                "color": "semi-dark-red",
-                "value": 1
               }
             ]
           },
@@ -137,36 +147,38 @@
         "x": 2,
         "y": 1
       },
-      "id": 76,
+      "id": 16,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "mean"
           ],
-          "fields": "",
+          "fields": "/^gateways$/",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
-          "expr": " count(appliance_status_online{online=\"false\", target=\"$target\", role_controller=\"true\"}) ",
-          "format": "time_series",
+          "expr": "sum(gateway_count{target=\"$target\"})",
           "instant": true,
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
+          "legendFormat": "gateways",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "offline",
+      "title": "GW",
       "type": "stat"
     },
     {
@@ -174,7 +186,6 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -184,7 +195,208 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 4,
+        "y": 1
+      },
+      "id": 73,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^IOTcon$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(portal_count{target=\"$target\"})",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "IOTcon",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "PRTL",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 6,
+        "y": 1
+      },
+      "id": 100,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^IOTcon$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "expr": "sum(iotconnector_count{target=\"$target\"})",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "IOTcon",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CON",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 8,
+        "y": 1
+      },
+      "id": 15,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^logserver$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "expr": "sum(logserver_count{target=\"$target\"})",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "logserver",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "LOG",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -201,7 +413,7 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 4,
+        "x": 10,
         "y": 1
       },
       "id": 12,
@@ -220,9 +432,10 @@
           "fields": "/^Appliances$/",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "sum(appliance_count{target=\"$target\"})",
@@ -242,7 +455,6 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -252,7 +464,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -277,7 +488,7 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 6,
+        "x": 12,
         "y": 1
       },
       "id": 54,
@@ -296,9 +507,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "sum(appliance_status_online{target=\"$target\", online=\"false\"})",
@@ -318,7 +530,6 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -328,7 +539,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -353,7 +563,7 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 8,
+        "x": 14,
         "y": 1
       },
       "id": 85,
@@ -372,9 +582,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "count(appliance_activated{target=\"$target\", appliance_activated=\"false\"})",
@@ -390,382 +601,6 @@
       "type": "stat"
     },
     {
-      "dashboardFilter": "",
-      "dashboardTags": [],
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "folderId": null,
-      "gridPos": {
-        "h": 16,
-        "w": 5,
-        "x": 10,
-        "y": 1
-      },
-      "id": 45,
-      "limit": 10,
-      "nameFilter": "",
-      "onlyAlertsOnDashboard": false,
-      "show": "current",
-      "sortOrder": 1,
-      "stateFilter": [
-        "no_data",
-        "execution_error",
-        "alerting",
-        "pending",
-        "paused"
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Alerts",
-      "type": "alertlist"
-    },
-    {
-      "cacheTimeout": null,
-      "columns": [
-        {
-          "text": "Current",
-          "value": "current"
-        }
-      ],
-      "datasource": null,
-      "description": "Conkolla not 200 resp code",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fontSize": "100%",
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 15,
-        "y": 1
-      },
-      "id": 83,
-      "links": [],
-      "pageSize": null,
-      "showHeader": true,
-      "sort": {
-        "col": 0,
-        "desc": true
-      },
-      "styles": [
-        {
-          "alias": "HTTP Code",
-          "align": "auto",
-          "colorMode": null,
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 0,
-          "mappingType": 1,
-          "pattern": "Metric",
-          "thresholds": [
-            "0",
-            "1"
-          ],
-          "type": "string",
-          "valueMaps": [
-            {
-              "text": "OK",
-              "value": "200"
-            }
-          ]
-        },
-        {
-          "alias": "Count",
-          "align": "auto",
-          "colorMode": "row",
-          "colors": [
-            "#56A64B",
-            "#E02F44",
-            "#E02F44"
-          ],
-          "decimals": 0,
-          "pattern": "Current",
-          "thresholds": [
-            "0",
-            "1"
-          ],
-          "type": "number",
-          "unit": "short"
-        }
-      ],
-      "targets": [
-        {
-          "expr": "count(connection_roundtrip{target=\"$target\", http_response_code!~\"2.*\"}) by (http_response_code)",
-          "instant": true,
-          "legendFormat": "{{http_response_code}}",
-          "refId": "A"
-        },
-        {
-          "expr": "absent(connection_roundtrip{target=\"$target\", http_response_code!~\"2.*\"})-2",
-          "instant": true,
-          "legendFormat": "OK",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Conkolla Health",
-      "transform": "timeseries_aggregations",
-      "type": "table-old"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 18,
-        "y": 1
-      },
-      "id": 51,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum(session_distinct_user_count{target=\"$target\"})",
-          "instant": true,
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Users",
-      "type": "singlestat",
-      "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "bps",
-      "gauge": {
-        "maxValue": 10000000,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": false
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 20,
-        "y": 1
-      },
-      "id": 68,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "pluginVersion": "6.3.5",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum(quantile_over_time(0.95, appliance_network_tx_bps[2m])) + sum(quantile_over_time(0.95, appliance_network_rx_bps[2m]))",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Sys bandwidth",
-      "type": "singlestat",
-      "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "decimals": 0,
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 6,
-        "x": 4,
-        "y": 3
-      },
-      "id": 97,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.1.5",
-      "targets": [
-        {
-          "expr": " count(count by (site_id) (appliance_status_online) )",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Sites",
-      "type": "stat"
-    },
-    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -774,7 +609,6 @@
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -782,10 +616,10 @@
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
-        "h": 13,
-        "w": 9,
-        "x": 15,
-        "y": 4
+        "h": 12,
+        "w": 8,
+        "x": 16,
+        "y": 1
       },
       "hiddenSeries": false,
       "id": 29,
@@ -803,8 +637,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -868,10 +705,10 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
+          "decimals": 0,
           "mappings": [
             {
               "id": 0,
@@ -881,7 +718,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -896,42 +732,111 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 0,
-        "y": 5
+        "h": 2,
+        "w": 6,
+        "x": 10,
+        "y": 3
       },
-      "id": 16,
+      "id": 97,
       "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
-        "colorMode": "background",
+        "colorMode": "value",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "lastNotNull"
           ],
-          "fields": "/^gateways$/",
+          "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
-          "expr": "sum(gateway_count{target=\"$target\"})",
+          "expr": " count(count by (site_id) (appliance_status_online) )",
           "instant": true,
           "interval": "",
-          "legendFormat": "gateways",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "GW",
+      "title": "Sites",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "controllers",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "noValue": "...",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 0,
+        "y": 5
+      },
+      "id": 76,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "expr": " count(appliance_status_online{online=\"false\", target=\"$target\", role_controller=\"true\"}) ",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "offline",
       "type": "stat"
     },
     {
@@ -942,7 +847,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "decimals": 0,
           "mappings": [],
           "max": 100,
@@ -984,9 +888,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "count(appliance_status_online{online=\"false\", target=\"$target\", role_gateway=\"true\"})  ",
@@ -1004,191 +909,13 @@
       "type": "stat"
     },
     {
-      "columns": [],
       "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fontSize": "100%",
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 4,
-        "y": 5
-      },
-      "id": 87,
-      "links": [
-        {
-          "title": "",
-          "url": ""
-        }
-      ],
-      "pageSize": null,
-      "showHeader": true,
-      "sort": {
-        "col": 1,
-        "desc": true
-      },
-      "styles": [
-        {
-          "alias": "Time",
-          "align": "auto",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "hidden"
-        },
-        {
-          "alias": "Version",
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "#E02F44",
-            "#F2CC0C",
-            "#56A64B"
-          ],
-          "decimals": 0,
-          "mappingType": 1,
-          "pattern": "Metric",
-          "thresholds": [],
-          "type": "string",
-          "unit": "short",
-          "valueMaps": [
-            {
-              "text": "offline n/a",
-              "value": "0"
-            }
-          ]
-        },
-        {
-          "alias": "Appliance count",
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "#E02F44",
-            "#F2CC0C",
-            "#56A64B"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 0,
-          "mappingType": 1,
-          "pattern": "Value",
-          "thresholds": [],
-          "type": "number",
-          "unit": "short"
-        },
-        {
-          "alias": "",
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "#E02F44",
-            "#E02F44",
-            "#56A64B"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "mappingType": 1,
-          "pattern": "",
-          "thresholds": [],
-          "type": "number",
-          "unit": "short"
-        }
-      ],
-      "targets": [
-        {
-          "expr": "appgate:appliance_version_count:labels_to_table{target=\"$target\"}",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{version}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "AppGate Version",
-      "transform": "timeseries_to_rows",
-      "type": "table-old"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 0,
-        "y": 9
-      },
-      "id": 15,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/^logserver$/",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.1.5",
-      "targets": [
-        {
-          "expr": "sum(logserver_count{target=\"$target\"})",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "logserver",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "LOG",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "logservers",
+      "description": "portal",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "decimals": 0,
           "mappings": [],
           "min": 0,
@@ -1213,8 +940,143 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 2,
-        "y": 9
+        "x": 4,
+        "y": 5
+      },
+      "id": 101,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "count(appliance_status_online{online=\"false\", target=\"$target\", role_portal=\"true\"})  ",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "offline",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "connectors",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "noValue": "...",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 6,
+        "y": 5
+      },
+      "id": 89,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "expr": "count(appliance_status_online{online=\"false\", target=\"$target\", role_iotconnector=\"true\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "offline",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "logservers",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "noValue": "...",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 8,
+        "y": 5
       },
       "id": 75,
       "options": {
@@ -1229,9 +1091,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "count(appliance_status_online{online=\"false\", target=\"$target\", role_logserver=\"true\"})  ",
@@ -1247,20 +1110,161 @@
       "type": "stat"
     },
     {
-      "columns": [],
+      "cacheTimeout": null,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 10,
+        "y": 5
+      },
+      "id": 68,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(quantile_over_time(0.95, appliance_network_tx_bps[2m])) + sum(quantile_over_time(0.95, appliance_network_rx_bps[2m]))",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Sys bandwidth",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
         },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 14,
+        "y": 5
+      },
+      "id": 51,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "expr": "sum(session_distinct_user_count{target=\"$target\"})",
+          "instant": true,
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Active Users",
+      "type": "stat"
+    },
+    {
+      "columns": [],
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {},
         "overrides": []
       },
       "fontSize": "100%",
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 4,
-        "y": 10
+        "h": 12,
+        "w": 5,
+        "x": 0,
+        "y": 9
       },
       "id": 37,
       "links": [
@@ -1370,234 +1374,367 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Issues",
+      "title": "Appliance status",
       "transform": "timeseries_to_rows",
       "type": "table-old"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 0,
-        "y": 13
-      },
-      "id": 73,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/^IOTcon$/",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.1.5",
-      "targets": [
-        {
-          "expr": "sum(iotconnector_count{target=\"$target\"})",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "IOTcon",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CON",
-      "type": "stat"
-    },
-    {
       "datasource": null,
-      "description": "connectors",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
-          "decimals": 0,
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
           "mappings": [],
-          "min": 0,
-          "noValue": "...",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "semi-dark-green",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "semi-dark-red",
-                "value": 1
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "severity"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 126
               }
             ]
           },
-          "unit": "none"
-        },
-        "overrides": []
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value (count)"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 46
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "alertname"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 174
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value (count)"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "#"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 4,
-        "w": 2,
-        "x": 2,
-        "y": 13
+        "w": 5,
+        "x": 5,
+        "y": 9
       },
-      "id": 89,
+      "id": 99,
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
+        "showHeader": true,
+        "sortBy": []
       },
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
-          "expr": "count(appliance_status_online{online=\"false\", target=\"$target\", role_iotconnector=\"true\"})",
-          "format": "time_series",
+          "exemplar": true,
+          "expr": "changes(ALERTS_FOR_STATE{}[10m]) + 1",
+          "format": "table",
           "instant": true,
           "interval": "",
-          "intervalFactor": 1,
           "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Alerts for state",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value #A": true,
+              "ascomp": false,
+              "asscope": false,
+              "astype": true,
+              "instance": true,
+              "job": true,
+              "target": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Value": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              },
+              "alertname": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "appliance_name": {
+                "aggregations": [],
+                "operation": null
+              },
+              "ascomp": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "severity": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 10,
+        "y": 9
+      },
+      "id": 87,
+      "links": [
+        {
+          "title": "",
+          "url": ""
+        }
+      ],
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 1,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "auto",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "Version",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "#E02F44",
+            "#F2CC0C",
+            "#56A64B"
+          ],
+          "decimals": 0,
+          "mappingType": 1,
+          "pattern": "Metric",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short",
+          "valueMaps": [
+            {
+              "text": "offline n/a",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "alias": "Appliance count",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "#E02F44",
+            "#F2CC0C",
+            "#56A64B"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 0,
+          "mappingType": 1,
+          "pattern": "Value",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "#E02F44",
+            "#E02F44",
+            "#56A64B"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "appgate:appliance_version_count:labels_to_table{target=\"$target\"}",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{version}}",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "offline",
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 17
-      },
-      "id": 81,
-      "panels": [],
-      "title": "Network",
-      "type": "row"
+      "title": "AppGate Version",
+      "transform": "timeseries_to_rows",
+      "type": "table-old"
     },
     {
       "aliasColors": {},
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": null,
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "unit": "short"
         },
         "overrides": []
       },
-      "fill": 0,
-      "fillGradient": 0,
+      "fill": 1,
+      "fillGradient": 10,
       "gridPos": {
         "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 18
+        "w": 19,
+        "x": 5,
+        "y": 13
       },
       "hiddenSeries": false,
-      "id": 78,
+      "id": 103,
       "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
         "max": false,
         "min": false,
         "rightSide": true,
-        "show": false,
-        "sort": "current",
-        "sortDesc": true,
+        "show": true,
+        "sideWidth": null,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
-      "pointradius": 2,
+      "pluginVersion": "7.5.5",
+      "pointradius": 1,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
+      "seriesOverrides": [
         {
-          "expr": "increase(appliance_network_dropin{target=\"$target\"}[5m]) ",
-          "instant": false,
-          "intervalFactor": 1,
-          "legendFormat": "IN {{appliance_name}} {{busiest_nic}}",
-          "refId": "A"
+          "alias": "/firing/",
+          "stack": "B",
+          "transform": "negative-Y",
+          "zindex": -3
         },
         {
-          "expr": "- increase(appliance_network_dropout{target=\"$target\"}[5m]) ",
-          "legendFormat": "OUT {{appliance_name}} {{busiest_nic}}",
-          "refId": "B"
+          "alias": "/pending/",
+          "stack": "A"
+        },
+        {
+          "alias": ""
+        },
+        {
+          "alias": "/help_series_x_axes_in_center/",
+          "bars": false,
+          "hideTooltip": true,
+          "legend": false,
+          "lines": false,
+          "stack": false,
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "ALERTS{}",
+          "interval": "",
+          "legendFormat": "{{alertname}}  {{alertstate}} {{asscope}} {{astype}} {{ascomp}} {{job}} ",
+          "refId": "C"
+        },
+        {
+          "expr": "1",
+          "hide": false,
+          "legendFormat": "help_series_x_axes_in_center",
+          "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Dropped packages 5 min avg",
+      "title": "Alerts History",
       "tooltip": {
-        "shared": false,
-        "sort": 2,
-        "value_type": "individual"
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
       },
       "type": "graph",
       "xaxis": {
@@ -1609,8 +1746,9 @@
       },
       "yaxes": [
         {
+          "decimals": null,
           "format": "short",
-          "label": null,
+          "label": "Firing (-)   /  Pending (+)  ",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -1620,19 +1758,19 @@
           "format": "short",
           "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "max": "1",
+          "min": "-1",
+          "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": true,
+        "alignLevel": 0
       }
     }
   ],
-  "refresh": "30s",
-  "schemaVersion": 26,
+  "refresh": "10s",
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "appgate",
@@ -1643,16 +1781,25 @@
     "list": [
       {
         "allValue": null,
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
         "datasource": "Prometheus",
         "definition": "appliance_major_version",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "target",
         "options": [],
-        "query": "appliance_major_version",
+        "query": {
+          "query": "appliance_major_version",
+          "refId": "Prometheus-target-Variable-Query"
+        },
         "refresh": 1,
         "regex": "/.*target=\"([^\"]*).*/",
         "skipUrlSync": false,
@@ -1666,7 +1813,7 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {
@@ -1686,5 +1833,5 @@
   "timezone": "",
   "title": "AppGate Dashboard",
   "uid": "aa009",
-  "version": 10
+  "version": 23
 }
