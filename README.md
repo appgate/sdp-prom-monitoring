@@ -277,6 +277,7 @@ If you want to use a single htpasswd file, then create symlinks to it with the s
 
 
 ## Deploy
+There are a few variables which are expected. You can either replace them directly in the docker compose file or use the method as described below by setting environment variables:
 Set the env variables (or set them in the docker compose file by hand)
 ``` 
 export DOMAIN=<domain>
