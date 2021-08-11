@@ -1,0 +1,217 @@
+version: "3.7"
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+  traefik_data: 
+
+networks:
+  monitor-net:
+    driver: overlay
+    name: monitor-net
+
+services:
+  traefik:
+    image: "traefik:v2.4"
+    command:
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.watch" 
+      - "--log.level=DEBUG"
+        #- "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--api=true"
+      - "--serverstransport.insecureskipverify=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencryptrs.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencryptrs.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencryptrs.acme.email=${LE_EMAILADDRESS}" 
+      - "--certificatesresolvers.letsencryptrs.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+        # store the certs
+      - "./letsencrypt:/letsencrypt"
+        # htpasswd generated users for basic auth 
+      - "./htapass:/htapass"
+        # access to docker socket, required by traefik
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+    deploy:
+      restart_policy:
+        condition: on-failure
+      labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.api.rule=Host(`agtraefik.${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+          - "traefik.http.routers.api.service=api@internal"
+          - "traefik.http.routers.api.middlewares=traefikauth"
+          - "traefik.http.routers.api.tls.certresolver=letsencryptrs"     
+          - "traefik.http.middlewares.traefikauth.basicauth.usersfile=/htapass/traefik_users"
+          - "traefik.http.services.dummy-svc.loadbalancer.server.port=9999"
+ 
+    networks:
+      - monitor-net
+  
+  conkolla:
+    image: mar8x/conkolla:latest
+    command:
+      - "--connectionsFile=/data/connections.yml"
+      - "--combineLogs"
+      - "--getOnly" 
+      - "--whiteListMonitoring"
+      - "--noAuth"
+
+    networks:
+      - monitor-net
+    volumes: 
+     # connection files for conkolla
+     - "./conkolla:/data"
+
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.ck.rule=Host(`agconkolla.${DOMAIN}`)"
+        - "traefik.http.services.ck.loadbalancer.server.port=4433"
+        - "traefik.http.services.ck.loadbalancer.server.scheme=https"
+        - "traefik.http.routers.ck.entrypoints=websecure"
+        - "traefik.http.middlewares.ckauth.basicauth.usersfile=/htapass/conkolla_users"
+        - "traefik.http.routers.ck.middlewares=ckauth"
+        - "traefik.http.routers.ck.tls.certresolver=letsencryptrs"
+      restart_policy:
+        condition: on-failure
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--storage.tsdb.retention=90d'
+    networks:
+      - monitor-net     
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.prometheus.rule=Host(`agprometheus.${DOMAIN}`)"
+        - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+        - "traefik.http.services.prometheus.loadbalancer.server.scheme=http"
+        - "traefik.http.routers.prometheus.entrypoints=websecure"
+        - "traefik.http.middlewares.promauth.basicauth.usersfile=/htapass/prometheus_users"
+        - "traefik.http.routers.prometheus.middlewares=promauth"
+        - "traefik.http.routers.prometheus.tls.certresolver=letsencryptrs"
+      restart_policy:
+        condition: on-failure
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - "./alertmanager/:/etc/alertmanager/"
+    networks:
+      - monitor-net
+
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.alertmanager.rule=Host(`agalertmanager.${DOMAIN}`)"
+        - "traefik.http.services.alertmanager.loadbalancer.server.port=9093"
+        - "traefik.http.services.alertmanager.loadbalancer.server.scheme=http"
+        - "traefik.http.routers.alertmanager.entrypoints=websecure"
+        - "traefik.http.middlewares.alertmauth.basicauth.usersfile=/htapass/alertmanager_users"
+        - "traefik.http.routers.alertmanager.middlewares=alertmauth"
+        - "traefik.http.routers.alertmanager.tls.certresolver=letsencryptrs"
+      placement:
+        constraints:
+           - node.role==manager
+      restart_policy:
+        condition: on-failure
+
+  node-exporter:
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command: 
+      - '--path.procfs=/host/proc' 
+      - '--path.sysfs=/host/sys'
+      - "--collector.filesystem.ignored-mount-points"
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    ports:
+      - 9100:9100
+    networks:
+      - monitor-net
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+
+  alertmanager:
+    image: prom/alertmanager
+    ports:
+      - 9093:9093
+    volumes:
+      - "./alertmanager/:/etc/alertmanager/"
+    networks:
+      - monitor-net
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    deploy:
+      placement:
+        constraints:
+           - node.role==manager
+      restart_policy:
+        condition: on-failure    
+
+  cadvisor:
+    image: google/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 8088:8080
+    networks:
+      - monitor-net
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+
+  grafana:
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    networks:
+      - monitor-net
+    user: "472"
+    deploy:
+      placement:
+        constraints:
+          - node.role==manager
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.grafana.rule=Host(`aggrafana.${DOMAIN}`)"
+        - "traefik.http.services.grafana.loadbalancer.server.scheme=http"
+        - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+        - "traefik.http.routers.grafana.entrypoints=websecure"
+        - "traefik.http.middlewares.grafanaauth.basicauth.usersfile=/htapass/grafana_users"
+        - "traefik.http.routers.grafana.middlewares=grafanaauth"
+        - "traefik.http.routers.grafana.tls.certresolver=letsencryptrs"
+ 
+      restart_policy:
+        condition: on-failure

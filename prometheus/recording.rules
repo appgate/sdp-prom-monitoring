@@ -1,0 +1,73 @@
+groups:
+  - name: conkolla recording 
+    rules:
+    - record: conkolla:apdex_score_tcp_connect_buckets_2c5_10_over_2m:percent_1
+      expr: >-
+        (sum by(target, metrics_endpoint_url) (rate(conkolla_conn_tcp_connection_duration_bucket{le="2.5"}[2m])) + sum by(target, metrics_endpoint_url) (rate(conkolla_conn_server_process_duration_bucket{le="10"}[2m]))) / 2 / sum by(target, metrics_endpoint_url) (rate(conkolla_conn_server_process_duration_count[2m]))
+    - record: conkolla:apdex_score_processtime_buckets_0c5_2c5_over_2m:percent_1
+      expr: >-
+        (sum by(target, metrics_endpoint_url) (rate(conkolla_conn_server_process_duration_bucket{le="0.5"}[2m])) + sum by(target, metrics_endpoint_url) (rate(conkolla_conn_server_process_duration_bucket{le="2.5"}[2m]))) / 2 / sum by(target, metrics_endpoint_url) (rate(conkolla_conn_server_process_duration_count[2m]))
+    - record: conkolla:service_availability_not_5xx_rate_over_7d:percent_1
+      expr: >-
+        sum by(target, metrics_endpoint_url) (rate(connection_roundtrip{http_response_code!~"5.."}[1w])) / sum by(target, metrics_endpoint_url) (rate(connection_roundtrip[1w]))
+    - record: conkolla:server_process_duration_max_rate_2m:seconds
+      expr: >-
+        max by(metrics_endpoint_url, target) (rate(conkolla_conn_server_process_duration_sum[2m]) / rate(conkolla_conn_server_process_duration_count[2m]))
+    - record: conkolla:content_transfert_duration:seconds
+      expr: >-
+        max by(metrics_endpoint_url, target) (rate(conkolla_conn_content_transfer_duration_sum[2m]) / rate(conkolla_conn_content_transfer_duration_count[2m]))
+    - record: conkolla:dns_lookup_duration_max_rate_2m:seconds
+      expr: >-
+        max by(metrics_endpoint_url, target) (rate(conkolla_conn_dns_lookup_duration_sum[2m]) / rate(conkolla_conn_dns_lookup_duration_count[2m]))
+    - record: conkolla:tcp_connect_duration_max_rate_2m:seconds
+      expr: >-
+        max by(metrics_endpoint_url, target) (rate(conkolla_conn_tcp_connection_duration_sum[2m]) / rate(conkolla_conn_tcp_connection_duration_count[2m]))
+    - record: conkolla:tls_handshake_duration_max_rate_2m:seconds
+      expr: >-
+        max by(metrics_endpoint_url, target) (rate(conkolla_conn_tls_handshake_duration_sum[2m]) / rate(conkolla_conn_tls_handshake_duration_count[2m]))
+    - record: conkolla:connection_total_duration_max_rate_2m:seconds
+      expr: >-
+        max by(metrics_endpoint_url, target) (rate(conkolla_conn_total_duration_sum[2m]) / rate(conkolla_conn_total_duration_count[2m]))
+    - record: conkolla:connection_total_duration:rate5m:seconds
+      expr: >-
+        rate(conkolla_conn_total_duration_sum[5m]) / rate(conkolla_conn_total_duration_count[5m])
+    - record: conkolla:connection_total_duration:rate5:avg_over_time_1d:seconds
+      expr: >-
+        avg_over_time(conkolla:connection_total_duration:rate5m:seconds[1d])
+    - record: conkolla:connection_total_duration:rate5m:stddev_over_time_1d:seconds
+      expr: >-
+        stddev_over_time(conkolla:connection_total_duration:rate5m:seconds[1d])
+    - record: conkolla:connection_total_duration:rate5:avg_over_time_1w:seconds
+      expr: >-
+        avg_over_time(conkolla:connection_total_duration:rate5m:seconds[1w])
+    - record: conkolla:connection_total_duration:rate5m:stddev_over_time_1w:seconds
+      expr: >-
+        stddev_over_time(conkolla:connection_total_duration:rate5m:seconds[1w])
+  - name: appgate recording rules
+    rules:
+    - record: appgate:bandwidth_quantile_95_over_1d:bps
+      expr: >-
+        quantile_over_time(0.95, appliance_network_rx_bps[1d]) + quantile_over_time(0.95, appliance_network_tx_bps[1d])
+    - record: appgate:bandwidth_quantile_95_over_2m:bps
+      expr: >-
+        quantile_over_time(0.95, appliance_network_rx_bps[2m]) + quantile_over_time(0.95, appliance_network_tx_bps[2m])
+    - record: appgate:gateway_sessions_quantile_95_over_1d:number
+      expr: quantile_over_time(0.95, gateway_nr_sessions[1d])
+    - record: appgate:gateway_sessions_quantile_95_over_1h:number
+      expr: quantile_over_time(0.95, gateway_nr_sessions[1h])
+    - record: appgate:distinct_user_count_quantile_95_over_1d:number
+      expr: quantile_over_time(0.95, session_distinct_user_count[1d])
+    - record: appgate:distinct_user_count_quantile_95_over_1h:number
+      expr: quantile_over_time(0.95, session_distinct_user_count[1d])
+    - record: appgate:site_degradation:percentage
+      expr: >-
+        100 * count by(target, site_id, asscope) (appliance_status_online{online="false",role_gateway="true"}) / count by(target, site_id, asscope) (role_status_gateway)
+    - record: appgate:appliance_version_count:labels_to_table
+      expr: >-
+        count_values by(target) ("version", appliance_major_version * 100 + appliance_minor_version * 10 + appliance_patch_version)
+    - record: appgate:appliance_memory_usage_avg_2m:percent
+      expr: avg_over_time(appliance_memory_usage_percentage[2m])
+    - record: appgate:appliance_cpu_avg_2m:percent
+      expr: avg_over_time(appliance_cpu_load_percentage[2m])
+    - record: appgate:appliance_disk_usage_avg_2m:percent
+      expr: avg_over_time(appliance_disk_usage_percentage[2m])

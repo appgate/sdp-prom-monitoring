@@ -1,0 +1,46 @@
+---
+version: 1
+connections:
+- controllerURL: example.appgate.com 
+  username: svc_acct_username
+  password: base64_encoded_AWS_KMS_blob
+  kmsBlob: true
+  kmsProvider: "aws"
+  kmsKey: "KMS_Key_ID-GUID"
+  kmsRegion: "AWS_Region"
+  skipVerifySSL: true
+  autoTokenRenewal: true
+  promCollector: true
+...
+
+## Template
+- controllerURL: ""
+  controllerPort: 0
+  username: ""
+  password: ""
+  otp: ""
+  providerName: ""
+  apiVersion: 0
+  acceptHeaderSuffix: ""
+  contentTypeHeader: ""
+  label: ""
+  machineId: ""
+  showToken: ""
+  skipVerifySSL: ""
+  dumpAGResponse: ""
+  autoTokenRenewal: ""
+  renewToken: ""
+  promCollector: ""
+  promTargetName: ""
+  promLabelExporter: ""
+  promLabelEnvironment: ""
+  promLabelGroup: ""
+  promLabelSite: ""
+  PromLabelRegion: ""
+  promLabelCountry: ""
+  promLabelCustomer: ""
+  promLabelCostID: ""
+  kmsBlob: ""
+  kmsProvider: ""
+  kmsKey: ""
+  kmsRegion: ""
